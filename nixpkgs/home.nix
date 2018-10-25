@@ -6,14 +6,21 @@ with builtins;
 let
   dotfiles = replaceStrings ["\n"] [""] (readFile ../DOTFILES);
 
-  linkDir = name: {
-    ".config/${name}" = {
-        source = "${dotfiles}/${name}";
-        recursive = true;
+  # must contain a slash at the end
+  configDir = ".config/";
+
+  linkLocation = isDir: prefix: name: {
+    "${prefix}${name}" = {
+      source = "${dotfiles}/${name}";
+      recursive = isDir;
       };
     };
 
-  linkFile = name: { ".config/${name}".source = "${dotfiles}/${name}"; };
+  linkLocations = isDir: prefix: map (linkLocation isDir prefix);
+
+  linkDirs = prefix: linkLocations true prefix;
+
+  linkFiles = prefix: linkLocations false prefix;
 
   concatSets = foldl' (x: y: x // y) {};
 
@@ -25,6 +32,7 @@ in
       pkgs.discord
       pkgs.fira-code
       pkgs.lxqt.qterminal
+      pkgs.dmenu
     ];
 
     programs.git = {
@@ -38,13 +46,25 @@ in
     };
 
     home.file = concatSets (
-      map linkDir [
+      # Directories in .config
+      linkDirs configDir [
         "nixpkgs"
         "mpv"
-	"qterminal.org"
+        "qterminal.org"
       ] ++
-      map linkFile [
+
+      # Files in .config
+      linkFiles configDir [
         "DOTFILES"
+      ] ++
+
+      # Directories starting with .
+      linkDirs "." [
+        "xmonad"
+      ] ++
+
+      # Files starting with .
+      linkFiles "." [
       ]
     );
   }

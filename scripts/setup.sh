@@ -14,7 +14,8 @@ function replaceConfig {
     rm -f $1 &&
     ln -s $2 $1 &&
     chown root:root $1 &&
-    chown root:root $2
+    chown root:root $2 &&
+    nixos-rebuild switch
 } &&
 
 mkSymlink=true &&
