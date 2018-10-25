@@ -33,6 +33,8 @@ in
       pkgs.fira-code
       pkgs.lxqt.qterminal
       pkgs.dmenu
+      pkgs.tree
+      pkgs.xxd
     ];
 
     programs.git = {
@@ -61,6 +63,7 @@ in
       # Directories starting with .
       linkDirs "." [
         "xmonad"
+        "mozilla"
       ] ++
 
       # Files starting with .

@@ -1,0 +1,59 @@
+https-strict: behind-the-scene false
+matrix-off: about-scheme true
+matrix-off: behind-the-scene true
+matrix-off: chrome-extension-scheme true
+matrix-off: chrome-scheme true
+matrix-off: moz-extension-scheme true
+matrix-off: opera-scheme true
+matrix-off: vivaldi-scheme true
+matrix-off: wyciwyg-scheme true
+noscript-spoof: * true
+referrer-spoof: * true
+referrer-spoof: behind-the-scene false
+* * * block
+* * css allow
+* * frame block
+* * image allow
+* youtube.com cookie allow
+duckduckgo.com duckduckgo.com script allow
+github.com api.github.com xhr allow
+github.com assets-cdn.github.com script allow
+github.com github.com cookie allow
+github.com github.com xhr allow
+github.com help.github.com script allow
+google.com apis.google.com script allow
+google.com google.com cookie allow
+google.com mail.google.com script allow
+google.com mail.google.com xhr allow
+google.com ogs.google.com xhr allow
+google.com translate.google.com script allow
+google.com translate.google.com xhr allow
+google.com www.google.com script allow
+google.com www.google.com xhr allow
+kiwiirc.com kiwiirc.com cookie allow
+kiwiirc.com kiwiirc.com media allow
+kiwiirc.com kiwiirc.com script allow
+kiwiirc.com kiwiirc.com xhr allow
+nixos.org nixos.org script allow
+nixos.org nixos.org xhr allow
+reddit.com gfycat.com media allow
+reddit.com gfycat.com script allow
+reddit.com gfycat.com xhr allow
+reddit.com reddit.com cookie allow
+reddit.com v.redd.it media allow
+reddit.com v.redd.it xhr allow
+reddit.com www.reddit.com script allow
+reddit.com www.reddit.com xhr allow
+reddit.com www.redditstatic.com script allow
+twitter.com abs.twimg.com script allow
+twitter.com twitter.com cookie allow
+twitter.com twitter.com script allow
+twitter.com twitter.com xhr allow
+xing.com www.xing.com xhr allow
+xing.com xing.com cookie allow
+xing.com xing.com script allow
+youtube.com clients1.google.com script allow
+youtube.com googlevideo.com xhr allow
+youtube.com www.youtube.com frame allow
+youtube.com www.youtube.com script allow
+youtube.com www.youtube.com xhr allow

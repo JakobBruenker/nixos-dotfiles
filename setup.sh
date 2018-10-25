@@ -15,6 +15,7 @@ function replaceConfig {
     ln -s $2 $1 &&
     chown root:root $1 &&
     chown root:root $2 &&
+    chmod 666 $1 &&
     nixos-rebuild switch
 } &&
 
@@ -35,6 +36,9 @@ privileges) [Yn] " response &&
             break;;
     esac
 done &&
+
+# Install home-manager
+hmPath="https://github.com/rycee/home-manager/archive/release-18.03.tar.gz"
 
 # Run home-manager to set up config files
 /usr/bin/env home-manager -f $dotfiles/nixpkgs/home.nix switch

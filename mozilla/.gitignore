@@ -1,0 +1,5 @@
+firefox/z9nbs196.default/*
+!firefox/z9nbs196.default/bookmarks.html
+!firefox/z9nbs196.default/extension-settings.json
+!firefox/z9nbs196.default/extensions.json
+!firefox/z9nbs196.default/prefs.js
