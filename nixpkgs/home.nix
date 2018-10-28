@@ -240,6 +240,16 @@ in
       };
     };
 
+    services.unclutter = {
+      enable = true;
+      timeout = 5;
+      threshold = 1;
+      extraOptions = [
+        "-root"
+        "-reset"
+      ];
+    };
+
     home.file = concatSets (
       # Files whose content is specified here
       [

@@ -82,14 +82,14 @@
   services.xserver.videoDrivers = [ "nvidia" ];
   # services.xserver.videoDrivers = [ "ati_unfree" ];
 
-  hardware.opengl.driSupport32Bit = true;
-
   # Enable touchpad support.
   # services.xserver.libinput.enable = true;
 
   # Enable display and window manager
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.windowManager.xmonad.enable = true;
+
+  hardware.opengl.driSupport32Bit = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.user = {
