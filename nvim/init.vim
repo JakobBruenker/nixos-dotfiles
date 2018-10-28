@@ -18,6 +18,8 @@ set wildignore+=tags
 set wildmenu
 set wildmode=longest:full
 
+set inccommand=split
+
 let maplocalleader = ","
 let mapleader      = ","
 
@@ -372,8 +374,6 @@ nnoremap <Leader>o <C-O>
 nnoremap <Leader>i <C-I>
 nnoremap <Leader><Leader>t <C-]>
 nnoremap <Leader><Leader>c <C-t>
-nnoremap <Leader>/ <C-U>
-nnoremap <Leader>- <C-D>
 nnoremap <silent> <Leader><Leader>f :set foldenable<CR>
 nnoremap <silent> <Leader><Leader>y :set nofoldenable<CR>
 

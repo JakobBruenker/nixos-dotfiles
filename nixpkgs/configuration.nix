@@ -49,6 +49,8 @@
     xorg.xkill
   ];
 
+  environment.pathsToLink = [ "/share/zsh" ];
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -102,5 +104,8 @@
   # servers. You should change this only after NixOS release notes say you
   # should.
   system.stateVersion = "18.09"; # Did you read the comment?
+
+  # Enable automatic updates
+  system.autoUpgrade.enable = true;
 
 }
