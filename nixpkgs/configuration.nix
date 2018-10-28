@@ -45,7 +45,6 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     wget
-    home-manager
     htop
     xorg.xkill
   ];

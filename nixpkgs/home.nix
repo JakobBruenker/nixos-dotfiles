@@ -27,14 +27,17 @@ let
 in
   {
     home.packages = [
-      pkgs.feh
-      pkgs.pavucontrol
       pkgs.discord
+      pkgs.dmenu
+      pkgs.feh
       pkgs.fira-code
       pkgs.lxqt.qterminal
-      pkgs.dmenu
+      pkgs.neovim
+      pkgs.pavucontrol
       pkgs.tree
       pkgs.xxd
+      pkgs.zathura
+      pkgs.home-manager
     ];
 
     programs.git = {
@@ -52,7 +55,10 @@ in
       linkDirs configDir [
         "nixpkgs"
         "mpv"
+	"youtube-dl"
         "qterminal.org"
+        "nvim"
+        "customvimstuff"
       ] ++
 
       # Files in .config
