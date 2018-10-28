@@ -248,6 +248,7 @@ prompt_status() {
   [[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}⚡"
   [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{%F{cyan}%}⚙"
 
+  symbols+="%{%F{gray}%}zsh"
   [[ -n "$symbols" ]] && prompt_segment black default "$symbols"
 }
 

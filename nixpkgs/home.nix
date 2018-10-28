@@ -31,6 +31,7 @@ in
       feh
       fira-code
       home-manager
+      keepassx2
       lxqt.qterminal
       ncdu
       neovim
@@ -87,6 +88,8 @@ in
         gps = "git push";
         gplo = "git pull origin";
         gpso = "git push origin";
+        gcd = "cd $(git rev-parse --show-toplevel)";
+
         us = "setxkbmap us";
         de = "setxkbmap de";
 
@@ -102,7 +105,7 @@ in
         share = true;
       };
       sessionVariables = {
-        LS_COLORS = "di=33:ln=target:ex=35:fi=34";
+        LS_COLORS = "di=33:ow=33:ln=target:ex=35:fi=34";
         DEFAULT_USER = "user";
       };
       initExtra = ''
@@ -119,6 +122,15 @@ in
         setopt GLOB_COMPLETE
         setopt PUSHD_MINUS
         setopt GLOB_STAR_SHORT
+
+        # correct spelling errors
+        # setopt CORRECT
+        # setopt CORRECT_ALL
+        setopt DVORAK
+
+        # ignore dups
+        setopt HIST_SAVE_NO_DUPS
+        setopt HIST_IGNORE_DUPS
 
         # silent pushd
         setopt PUSHD_SILENT
@@ -146,6 +158,9 @@ in
           setopt IGNORE_EOF
         fi
 
+        # don't put commands into history if they begin with a space
+        setopt HIST_IGNORE_SPACE
+
         setopt NO_FLOW_CONTROL
         setopt NO_CLOBBER
         setopt NO_CASE_GLOB
@@ -154,6 +169,18 @@ in
 
         # setup thefuck
         eval $(thefuck --alias)
+
+        # plugins TODO maybe use oh-my-zsh-custom for this
+
+        source zsh-syntax-highlighting.zsh
+
+        source zsh-history-substring-search.zsh
+        bindkey '^[OA' history-substring-search-up
+        bindkey '^[OB' history-substring-search-down
+        bindkey -M vicmd 'k' history-substring-search-up
+        bindkey -M vicmd 'j' history-substring-search-down
+        HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND=fg=magenta,bg=default
+        HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND=fg=red,bg=default,standout
       '';
       profileExtra = "";
       loginExtra = "";
@@ -178,6 +205,28 @@ in
               "repo": "nix-zsh-completions",
               "rev": "13a5533b231798c2c8e6831e00169f59d0c716b8",
               "sha256": "1xa1nis1pvns81im15igbn3xxb0mhhfnrj959pcnfdcq5r694isj"
+            }
+          '');
+        }
+        {
+          name = "syntax-highlighting";
+          src = pkgs.fetchFromGitHub (fromJSON ''
+            {
+                "owner": "zsh-users",
+                "repo": "zsh-syntax-highlighting",
+                "rev": "4ce56a821e9988c1a24fa1b1d62ed57f72893217",
+                "sha256": "0p702by1vsgsjxw43mdx00mvbzql1z66f5wyvns3mcyf2k2xhd40"
+             }
+          '');
+        }
+        {
+          name = "history-substring-search";
+          src = pkgs.fetchFromGitHub (fromJSON ''
+            {
+              "owner": "zsh-users",
+              "repo": "zsh-history-substring-search",
+              "rev": "47a7d416c652a109f6e8856081abc042b50125f4",
+              "sha256": "1mvilqivq0qlsvx2rqn6xkxyf9yf4wj8r85qrxizkf0biyzyy4hl"
             }
           '');
         }
