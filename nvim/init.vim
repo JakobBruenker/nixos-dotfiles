@@ -335,7 +335,7 @@ noremap ; :
 vnoremap . :normal .<CR>
 vnoremap < <gv
 vnoremap > >gv
-imap <expr> <Leader><CR> (pumvisible() ? "<C-Y>" : "") . '<Plug>snipMateNextOrTrigger'
+" imap <expr> <Leader><CR> (pumvisible() ? "<C-Y>" : "") . '<Plug>snipMateNextOrTrigger'
 
 vnoremap <Space> I<Space><Esc>gv
 map y <Plug>(operator-flashy)
@@ -442,8 +442,8 @@ highlight TagbarHighlight ctermfg=7 ctermbg=NONE
 highlight TagbarSignature ctermfg=13
 highlight SpellBad ctermbg=NONE
 highlight SpellCap ctermbg=NONE
-highlight EasyMotionTarget2First ctermfg=1
-highlight EasyMotionTarget2Second ctermfg=5
+" highlight EasyMotionTarget2First ctermfg=1
+" highlight EasyMotionTarget2Second ctermfg=5
 highlight SpellRare cterm=NONE ctermbg=NONE
 highlight MatchParen ctermbg=0
 

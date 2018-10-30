@@ -276,6 +276,55 @@ c.InteractiveShell.autocall = 1
 # TerminalInteractiveShell(InteractiveShell) configuration
 #------------------------------------------------------------------------------
 
+from IPython.terminal.prompts import Prompts, Token
+from datetime import datetime
+import os
+
+c.TerminalInteractiveShell.highlighting_style_overrides = {
+    Token.PromptNothing: 'bg:#002b36 #839496',
+    Token.PromptIPython: 'bg:#073642 #dc322f',
+    Token.PromptName: 'bg:#073642 #b58900',
+    Token.PromptDir: 'bg:#268bd2 #073642',
+    Token.PromptDirEnd: 'bg:#002b36 #268bd2',
+    Token.PromptTime: 'bg:#073642 #859900',
+    Token.PromptTimeEnd: 'bg:#002b36 #073642',
+}
+
+class MyPrompts(Prompts):
+    def in_prompt_tokens(self, cli=None):
+        cwd = os.getcwd()
+        home = os.environ['HOME']
+        # need to check to prevent replacing things like /usr/share/home/user/
+        if cwd.startswith(home):
+            cwd = cwd.replace(home, '~', 1)
+        if 'name' in os.environ:
+            name = '{ ' + os.environ['name'] + ' } '
+        else:
+            name = ''
+        now = datetime.now()
+        t2s = lambda t: str(t).zfill(2)
+        time = '  ' + t2s(now.hour) + ':' + t2s(now.minute) + ' '
+        return [
+            (Token.PromptIPython, ' ipython '),
+            (Token.PromptName, name),
+            (Token.PromptDir, ' ' + cwd),
+            (Token.PromptDirEnd, '\n'),
+            (Token.PromptTime, time),
+            (Token.PromptTimeEnd, ' '),
+        ]
+
+    def continuation_prompt_tokens(self, cli=None, width=None):
+        if width is None:
+            width = self._width()
+        return [
+            (Token.Prompt, ' ' * width),
+        ]
+
+    def out_prompt_tokens(self):
+        return [
+            (Token, ''),
+        ]
+
 ## Set to confirm when you try to exit IPython with an EOF (Control-D in Unix,
 #  Control-Z/Enter in Windows). By typing 'exit' or 'quit', you can force a
 #  direct exit without any confirmation.
@@ -318,10 +367,7 @@ c.TerminalInteractiveShell.editing_mode = 'vi'
 
 ## Class used to generate Prompt token for prompt_toolkit
 # c.TerminalInteractiveShell.prompts_class = 'IPython.terminal.prompts.Prompts'
-# c.TerminalInteractiveShell.prompts_class = '''
-# class Prompts()
-#     pass
-# '''
+c.TerminalInteractiveShell.prompts_class = MyPrompts
 
 ## Use `raw_input` for the REPL, without completion and prompt colors.
 #  

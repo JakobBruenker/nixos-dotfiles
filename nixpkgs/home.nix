@@ -4,7 +4,7 @@ with import <nixpkgs> {};
 with builtins;
 
 let
-  dotfiles = replaceStrings ["\n"] [""] (readFile ../DOTFILES);
+  dotfiles = lib.fileContents ../DOTFILES;
 
   configDir = ".config";
 
@@ -25,6 +25,8 @@ let
 
 in
   {
+    nixpkgs.config = { allowUnfree = true; };
+
     home.packages = with pkgs; [
       discord
       dmenu
@@ -57,9 +59,11 @@ in
       enable = true;
       dotDir = "${configDir}/zsh";
       shellAliases = {
+        ns = "nix-shell";
         vim = "nvim";
         vi = "vim";
         vito = "vim TODO.qt";
+        ipy = "ipython --profile=term";
         ".." = "cd ..";
         "..." = "cd ../..";
         "...." = "cd ../../..";
@@ -68,7 +72,7 @@ in
         cdd = "popd";
         df = "df -h";
         mem = "free -h";
-        t = "date | sed -r ''s/(\\w+ ){3}(\\w+:\\w+):\\w+( \\w+){2}/\\2/''";
+        t = "date +%H:%M:%S";
         h = "hoogle";
         pl = "pointfree";
         p = "xclip -o";
@@ -109,6 +113,9 @@ in
         DEFAULT_USER = "user";
       };
       initExtra = ''
+        # set character shown for partial lines
+        PROMPT_EOL_MARK=↲
+
         # vim editing mode
         bindkey -v
 
@@ -181,6 +188,27 @@ in
         bindkey -M vicmd 'j' history-substring-search-down
         HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND=fg=magenta,bg=default
         HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND=fg=red,bg=default,standout
+
+        IGNOREEOF=1
+        __BASH_IGNORE_EOF=$IGNOREEOF
+        bash-ctrl-d() {
+          if [[ -z $__BASH_IGNORE_EOF || $__BASH_IGNORE_EOF == 0 ]]; then
+            exit
+          else
+            __BASH_IGNORE_EOF=$(expr $__BASH_IGNORE_EOF - 1)
+          fi
+        }
+
+        accept-line-and-reset-ignoreeof() {
+          __BASH_IGNORE_EOF=$IGNOREEOF
+          zle accept-line
+        }
+
+        zle -N bash-ctrl-d
+        bindkey "^D" bash-ctrl-d
+
+        zle -N accept-line-and-reset-ignoreeof
+        bindkey "^M" accept-line-and-reset-ignoreeof
       '';
       profileExtra = "";
       loginExtra = "";
@@ -264,13 +292,14 @@ in
 
       # Directories in .config
       linkDirs "${configDir}/" [
-        "nixpkgs"
-        "mpv"
-        "youtube-dl"
-        "qterminal.org"
-        "nvim"
         "customvimstuff"
+        "matplotlib"
+        "mpv"
+        "nixpkgs"
+        "nvim"
         "oh-my-zsh-custom"
+        "qterminal.org"
+        "youtube-dl"
       ] ++
 
       # Files in .config
@@ -282,6 +311,7 @@ in
       linkDirs "." [
         "xmonad"
         "mozilla"
+        "ipython"
       ] ++
 
       # Files starting with .
