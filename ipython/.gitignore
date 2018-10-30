@@ -1,0 +1,4 @@
+*
+!.gitignore
+!profile_term
+!profile_term/ipython_config.py
