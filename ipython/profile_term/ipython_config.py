@@ -307,7 +307,7 @@ class MyPrompts(Prompts):
         return [
             (Token.PromptIPython, ' ipython '),
             (Token.PromptName, name),
-            (Token.PromptDir, ' ' + cwd),
+            (Token.PromptDir, ' ' + cwd + ' '),
             (Token.PromptDirEnd, '\n'),
             (Token.PromptTime, time),
             (Token.PromptTimeEnd, ' '),
@@ -319,6 +319,16 @@ class MyPrompts(Prompts):
         return [
             (Token.Prompt, ' ' * width),
         ]
+
+    def rewrite_prompt_tokens(self, cli=None, width=None):
+        if width is None:
+            width = 10
+        # return [ (Token.Prompt, ' ' * (width-4) + '==> '), ]
+        # return [ (Token.PromptTime, ' correct '), ]
+        return [
+            (Token.PromptTime, 'rewrite '),
+            (Token.PromptTimeEnd, ' '),
+            ]
 
     def out_prompt_tokens(self):
         return [

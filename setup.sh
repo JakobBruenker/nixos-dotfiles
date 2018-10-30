@@ -11,11 +11,12 @@ configName=configuration.nix &&
 config=/etc/nixos/$configName &&
 dotfilesConfig=$dotfiles/$confDir/$configName &&
 customHardware=$dotfiles/$confDir/custom-hardware.nix &&
-# $1: config
-# $2: dotfilesConfig
-# $3: customHardware
+
 function replaceConfig {
-    rm -f $1
+    config=$1
+    dotfilesConfig=$2
+    customHardware=$3
+    rm -f $config
     printf "\
 { config, pkgs, ... }: \n\
 {\n\
@@ -23,11 +24,11 @@ function replaceConfig {
     [ # Include the results of the hardware scan.\n\
       ./hardware-configuration.nix\n\
       # Include the configuration in the user directory.\n\
-      $2\n\
+      $dotfilesConfig\n\
       # Include the hardware configuration in the user directory.\n\
-      $3\n\
+      $customHardware\n\
     ];\n\
-}\n" > $1
+}\n" > $config
     nixos-rebuild switch
 } &&
 
@@ -39,13 +40,13 @@ do
  [Yn] " response &&
     case "$response" in
         [yY][eE][sS]|[yY]|"")
-            echo Replacing /etc/nixos/configuration.nix...
+            echo Replacing $config...
             sudo bash -c "`declare -f replaceConfig`;\
                           replaceConfig $config $dotfilesConfig $customHardware"
             ret=$?
             break;;
         [nN][oO]|[nN]*)
-            echo Continuing without replacing /etc/nixos/configuration.nix...
+            echo Continuing without replacing $config...
             break;;
     esac
 done &&

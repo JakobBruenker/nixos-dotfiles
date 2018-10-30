@@ -113,7 +113,7 @@ Plug 'Twinside/vim-haskellFold', { 'for': 'haskell' }
 Plug 'itchyny/vim-haskell-indent', { 'for': 'haskell' }
 Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim', 'for': 'haskell'}
 
-Plug '~/dotfiles/customvimstuff'
+Plug '~/nixos-dotfiles/customvimstuff'
 
 call plug#end()
 

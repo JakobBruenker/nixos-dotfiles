@@ -37,11 +37,13 @@ in
       lxqt.qterminal
       ncdu
       neovim
+      mpv
       pavucontrol
       thefuck
       tree
       xclip
       xxd
+      youtube-dl
       zathura
     ];
 
@@ -101,7 +103,7 @@ in
         hs = "home-manager switch";
       };
       enableCompletion = true;
-      enableAutosuggestions = true;
+      enableAutosuggestions = false;
       history = {
         ignoreDups = true;
         expireDuplicatesFirst = false;
@@ -179,16 +181,6 @@ in
 
         # plugins TODO maybe use oh-my-zsh-custom for this
 
-        source zsh-syntax-highlighting.zsh
-
-        source zsh-history-substring-search.zsh
-        bindkey '^[OA' history-substring-search-up
-        bindkey '^[OB' history-substring-search-down
-        bindkey -M vicmd 'k' history-substring-search-up
-        bindkey -M vicmd 'j' history-substring-search-down
-        HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND=fg=magenta,bg=default
-        HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND=fg=red,bg=default,standout
-
         IGNOREEOF=1
         __BASH_IGNORE_EOF=$IGNOREEOF
         bash-ctrl-d() {
@@ -209,6 +201,16 @@ in
 
         zle -N accept-line-and-reset-ignoreeof
         bindkey "^M" accept-line-and-reset-ignoreeof
+
+        source zsh-syntax-highlighting.zsh
+
+        source zsh-history-substring-search.zsh
+        bindkey '^[OA' history-substring-search-up
+        bindkey '^[OB' history-substring-search-down
+        bindkey -M vicmd 'k' history-substring-search-up
+        bindkey -M vicmd 'j' history-substring-search-down
+        HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND=fg=magenta,bg=default
+        HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND=fg=red,bg=default,standout
       '';
       profileExtra = "";
       loginExtra = "";
