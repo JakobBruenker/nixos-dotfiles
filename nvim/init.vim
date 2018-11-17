@@ -23,6 +23,8 @@ set inccommand=split
 let maplocalleader = ","
 let mapleader      = ","
 
+set textwidth=79
+
 " We can see the mode in airline anyway
 set noshowmode
 
@@ -116,6 +118,26 @@ Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim', 'for': 'haskell'}
 Plug '~/nixos-dotfiles/customvimstuff'
 
 call plug#end()
+
+" }}}
+
+" {{{ NEOMAKE
+
+let g:neomake_warning_sign = {
+            \   'text': '➤',
+            \   'texthl': 'Title',
+            \ }
+let g:neomake_message_sign = {
+            \   'text': '➤',
+            \   'texthl': 'NeomakeMessageSign',
+            \ }
+
+let g:neomake_info_sign = {'text': '➤', 'texthl': 'NeomakeInfoSign'}
+
+let g:neomake_error_sign = {
+            \ 'text': '➤',
+            \ 'texthl': 'WarningMsg',
+            \ }
 
 " }}}
 

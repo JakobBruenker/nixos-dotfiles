@@ -28,6 +28,7 @@ in
     nixpkgs.config = { allowUnfree = true; };
 
     home.packages = with pkgs; [
+      chromium
       discord
       dmenu
       feh
@@ -35,16 +36,20 @@ in
       home-manager
       keepassx2
       lxqt.qterminal
+      mpv
       ncdu
       neovim
-      mpv
+      openssl
+      p7zip
       pavucontrol
       thefuck
       tree
+      unzip
       xclip
       xxd
       youtube-dl
       zathura
+      zip
     ];
 
     programs.git = {

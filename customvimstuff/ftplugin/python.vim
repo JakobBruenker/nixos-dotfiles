@@ -20,9 +20,15 @@ function! SetEntryType(entry)
 	endif
 endfunction
 
+" let g:neomake_pylint_maker = {
+" 	\ 'exe': 'pylint',
+" 	\ 'args': expand('%:p:h'),
+" 	\ 'errorformat': '%f:%l:%c: %t%n: %m',
+" 	\ 'postprocess': function('SetEntryType'),
+" 	\ }
 let g:neomake_pylint_maker = {
-	\ 'exe': 'pylint',
-	\ 'args': expand('%:p:h'),
+	\ 'exe': 'nix-shell',
+	\ 'args': ['--run', 'pylint ' . expand('%:p:h')],
 	\ 'errorformat': '%f:%l:%c: %t%n: %m',
 	\ 'postprocess': function('SetEntryType'),
 	\ }
