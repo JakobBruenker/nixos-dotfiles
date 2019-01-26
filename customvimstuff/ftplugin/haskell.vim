@@ -3,39 +3,47 @@ set iskeyword+=.,39
 
 " {{{ ghcid
 
-let g:ghcid_command = ["ghcid", "--test=:!hlint ."]
+let g:ghcid_command = "ghcid -c 'cabal new-repl --ghc-options=-fdiagnostics-color=always' --test=':!hlint src && cabal new-test' --color=always --reload=test --restart=package.yaml"
+let g:ghcid_keep_open = 1
+'
+function! OpenGhcid()
+    :Ghcid
+    execute "normal \<C-w>H\<C-w>l"
+    setlocal nospell
+    execute "normal \<C-w>h"
+endfunction
 
-nnoremap <silent> <localleader><localleader>m :w<CR>:Ghcid<CR>
-" inoremap <silent> <localleader><localleader>m <ESC>:w<CR>:Ghcid<CR>
+nnoremap <silent> <localleader><localleader>m :w<CR>:call OpenGhcid()<CR>
+inoremap <silent> <localleader><localleader>m :w<CR>:call OpenGhcid()<CR>
 
 " }}}
 
 " {{{ necoghc
 
 " Disable haskell-vim omnifunc
-let g:haskellmode_completion_ghc = 0
-autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-let g:necoghc_enable_detailed_browse = 1
+" let g:haskellmode_completion_ghc = 0
+" autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+" let g:necoghc_enable_detailed_browse = 1
 
 " }}}
 
 " {{{ neomake
 
-function! HsMake()
-    call QuickfixOpen()
-    Neomake!
-endfunction
+" function! HsMake()
+"     call QuickfixOpen()
+"     Neomake!
+" endfunction
 
 " nnoremap <silent> <localleader><localleader>m :w<CR>:call HsMake()<CR>
 " inoremap <silent> <localleader><localleader>m <ESC>:w<CR>:call HsMake()<CR>
 
-augroup Neomake
-    autocmd!
-    autocmd BufWritePost *.hs call jobstart(['bash', '-O', 'globstar', '-c', 'hothasktags ./**/*.hs > tags'])
-    autocmd BufWritePost *.hs AirlineRefresh
-augroup END
+" augroup Neomake
+"     autocmd!
+"     autocmd BufWritePost *.hs call jobstart(['bash', '-O', 'globstar', '-c', 'hothasktags ./**/*.hs > tags'])
+"     autocmd BufWritePost *.hs AirlineRefresh
+" augroup END
 
-let &makeprg = 'stack build --exec "hlint src"'
+" let &makeprg = 'stack build --exec "hlint src"'
 
 " }}}
 
@@ -67,10 +75,10 @@ setlocal expandtab
 nnoremap ,s. vip:EasyAlign<CR><C-X>-><CR>
 vnoremap ,s. :EasyAlign<CR><C-X>-><CR>
 
-inoremap <LocalLeader>: <ESC>yypA<Space><ESC>kA<Space>::<Space>
-inoremap -. <Space>-><Space>
-inoremap ,- <Space><-<Space>
-inoremap :: <Space>::<Space>
+inoremap <LocalLeader>; <ESC>yypA<Space><ESC>kA<Space>::<Space>
+inoremap u. <Space>-><Space>
+inoremap ,u <Space><-<Space>
+inoremap ;; <Space>::<Space>
 
 " }}}
 

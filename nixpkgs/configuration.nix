@@ -36,10 +36,37 @@
     consoleFont = "Lat2-Terminus16";
     consoleKeyMap = "us";
     defaultLocale = "en_US.UTF-8";
+    inputMethod = {
+      enabled = "fcitx";
+      fcitx.engines = with pkgs.fcitx-engines; [ mozc ];
+    };
   };
 
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
+
+  fonts.fonts = with pkgs; [
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
+    ipaexfont
+    migmix
+  ];
+
+  fonts.fontconfig.defaultFonts = {
+    monospace = [
+      "Fira Code"
+      "Noto Sans Mono CJK JP"
+    ];
+    sansSerif = [
+      "DejaVu Sans"
+      "Noto Sans CJK JP"
+    ];
+    serif = [
+      "DejaVu Serif"
+      "IPAexMincho"
+    ];
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

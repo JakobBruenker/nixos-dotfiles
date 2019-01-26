@@ -29,6 +29,7 @@ in
 
     home.packages = with pkgs; [
       chromium
+      ctags
       discord
       dmenu
       feh
@@ -106,6 +107,11 @@ in
 
         vh = "nvim ${dotfiles}/nixpkgs/home.nix";
         hs = "home-manager switch";
+
+        ct = "cabal new-test";
+        cr = "cabal new-repl \${PWD##*/}";
+
+        tp = "ping 1.1.1.1";
       };
       enableCompletion = true;
       enableAutosuggestions = false;
@@ -323,6 +329,9 @@ in
 
       # Files starting with .
       linkFiles "." [
+        "hspec"
+        "gdbinit"
+        "xsession"
       ]
     );
   }

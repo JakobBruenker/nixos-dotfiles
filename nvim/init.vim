@@ -4,6 +4,13 @@ set nofoldenable
 set ignorecase
 set smartcase
 
+set textwidth=79
+set smartindent
+set autoindent
+set softtabstop=2
+set shiftwidth=2
+set expandtab
+
 set nohlsearch
 
 set undofile
