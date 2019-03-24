@@ -23,7 +23,7 @@
   boot.loader.grub.useOSProber = true;
 
   networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wifi via wpa_supplicant.
+  networking.wireless.enable = true;  # Enables wifi via wpa_supplicant.
   # networking.networkmanager.enable = true;
   networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
 
@@ -106,11 +106,11 @@
   services.xserver.layout = "us";
   services.xserver.xkbOptions = "eurosign:e";
 
-  services.xserver.videoDrivers = [ "nvidia" ];
+  # services.xserver.videoDrivers = [ "nvidia" ];
   # services.xserver.videoDrivers = [ "ati_unfree" ];
 
   # Enable touchpad support.
-  # services.xserver.libinput.enable = true;
+  services.xserver.libinput.enable = true;
 
   # Enable display and window manager
   services.xserver.displayManager.lightdm.enable = true;
