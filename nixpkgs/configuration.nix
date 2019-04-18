@@ -118,12 +118,15 @@
 
   hardware.opengl.driSupport32Bit = true;
 
+  # Enable virtualisation
+  virtualisation.virtualbox.host.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.user = {
     isNormalUser = true;
     home = "/home/user";
     uid = 1000;
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" "networkmanager" "vboxusers" ];
   };
 
   # This value determines the NixOS release with which your system is to be

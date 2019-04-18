@@ -28,6 +28,7 @@ in
     nixpkgs.config = { allowUnfree = true; };
 
     home.packages = with pkgs; [
+      arandr
       chromium
       ctags
       discord
@@ -68,6 +69,9 @@ in
       dotDir = "${configDir}/zsh";
       shellAliases = {
         ns = "nix-shell";
+        nb =
+          "nix-build -E \"with import <nixpkgs> {}; callPackage ./default.nix {}\"";
+
         vim = "nvim";
         vi = "vim";
         vito = "vim TODO.qt";
