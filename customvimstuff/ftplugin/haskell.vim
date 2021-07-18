@@ -1,5 +1,7 @@
 " the period is for hothasktags
-set iskeyword+=.,39
+" set iskeyword+=.,39
+" using fasttags now
+set iskeyword+=39
 
 " {{{ ghcid
 
@@ -13,8 +15,8 @@ function! OpenGhcid()
     execute "normal \<C-w>h"
 endfunction
 
-nnoremap <silent> <localleader><localleader>m :w<CR>:call OpenGhcid()<CR>
-inoremap <silent> <localleader><localleader>m :w<CR>:call OpenGhcid()<CR>
+" nnoremap <silent> <localleader><localleader>m :w<CR>:call OpenGhcid()<CR>
+" inoremap <silent> <localleader><localleader>m :w<CR>:call OpenGhcid()<CR>
 
 " }}}
 
@@ -67,6 +69,24 @@ setlocal autoindent
 setlocal softtabstop=2
 setlocal shiftwidth=2
 setlocal expandtab
+
+" lua require'lspconfig'.hls.setup{cmd = {"haskell-language-server", "--lsp"}}
+  " cmd = { "haskell-language-server-wrapper", "--lsp" }
+  " filetypes = { "haskell", "lhaskell" }
+  " lspinfo = function (cfg)
+  "       -- return "specific"
+  "       if cfg.settings.languageServerHaskell.logFile or false then
+  "         return "logfile: "..cfg.settings.languageServerHaskell.logFile
+  "       end
+  "       return ""
+  "     end;
+  " root_dir = root_pattern("*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml")
+  " settings = {
+  "   languageServerHaskell = {
+  "     formattingProvider = "ormolu"
+  "   }
+  " }
+" }
 
 " }}}
 

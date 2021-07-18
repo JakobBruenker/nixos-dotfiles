@@ -14,7 +14,6 @@ set expandtab
 set nohlsearch
 
 set undofile
-set noswapfile
 
 set completeopt=longest,menuone,preview
 
@@ -53,12 +52,12 @@ let &fillchars = 'vert: ,fold:·'
 
 " if mouse=a, remember to hold shift to get regular terminal copy
 " functionality back
-set mouse=r
+set mouse=a
 
 augroup SignCol
-	autocmd!
-	autocmd BufEnter * sign define dummy
-	autocmd BufEnter * execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
+        autocmd!
+        autocmd BufEnter * sign define dummy
+        autocmd BufEnter * execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
 augroup END
 
 " because vim recognizes an empty .tex as plaintex
@@ -82,8 +81,8 @@ nnoremap <Leader><Leader><Leader>lv :source $MYVIMRC<CR>
 " Still have to manually call PlugInstall though, otherwise the window opens
 " every time you open vim
 if empty(glob('~/.vim/autoload/plug.vim'))
-	silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
-		\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 endif
 
 call plug#begin('~/.vim/plugged')
@@ -101,10 +100,8 @@ Plug 'LnL7/vim-nix'
 Plug 'majutsushi/tagbar'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'mkitt/tabline.vim'
-Plug 'neomake/neomake'
+" Plug 'neomake/neomake'
 Plug 'romainl/flattened'
-Plug 'scrooloose/nerdtree'
-Plug 'SirVer/ultisnips'
 Plug 'tomtom/tlib_vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
@@ -113,14 +110,14 @@ Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'Xuyuanp/nerdtree-git-plugin'
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'derekelkins/agda-vim', { 'for': 'agda' }
 
-Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
+" Plug 'neovim/nvim-lspconfig', { 'for': 'haskell' }
+
 Plug 'Twinside/vim-haskellFold', { 'for': 'haskell' }
 Plug 'itchyny/vim-haskell-indent', { 'for': 'haskell' }
-Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim', 'for': 'haskell'}
+Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim', 'for': 'haskell' }
 
 Plug '~/nixos-dotfiles/customvimstuff'
 
@@ -151,24 +148,24 @@ let g:neomake_error_sign = {
 " {{{ QUICKTASK
 
 function! OpenNewTasks()
-	QTInit
-	if bufnr('#') != -1
-		let bfn = bufnr('%')
-		:quit
-		execute 'buffer ' . bfn
-	endif
-	normal! Gddddkk^wC
-	file TODO.qt
+        QTInit
+        if bufnr('#') != -1
+                let bfn = bufnr('%')
+                :quit
+                execute 'buffer ' . bfn
+        endif
+        normal! Gddddkk^wC
+        file TODO.qt
 endfunction
 
 function! OpenTasksMapping()
-	if filereadable('TODO.qt')
-		return ":edit TODO.qt\<CR>gg/\\v^\\s+-\\s+\\zs\<CR>"
-	elseif bufnr('TODO.qt') != -1
-		return ':buffer ' . bufnr("TODO.qt") . "\<CR>gg/\\v^\\s+-\\s+\\zs\<CR>"
-	else
-		return ":call OpenNewTasks()\<CR>A"
-	endif
+        if filereadable('TODO.qt')
+                return ":edit TODO.qt\<CR>gg/\\v^\\s+-\\s+\\zs\<CR>"
+        elseif bufnr('TODO.qt') != -1
+                return ':buffer ' . bufnr("TODO.qt") . "\<CR>gg/\\v^\\s+-\\s+\\zs\<CR>"
+        else
+                return ":call OpenNewTasks()\<CR>A"
+        endif
 endfunction
 
 nnoremap <expr> <silent> <Leader><Leader><Leader>to OpenTasksMapping()
@@ -176,27 +173,6 @@ let g:quicktask_snip_path = '~/.quicktaskSnips'
 
 " }}}
 
-" {{{ NERDTREE
-
-let g:NERDTreeQuitOnOpen = 1
-
-" }}}
-
-" {{{ NERDTREE-GIT-PLUGIN
-
-let g:NERDTreeIndicatorMapCustom = {
-\ "Modified"  : "~",
-\ "Staged"    : "✚",
-\ "Untracked" : "✭",
-\ "Renamed"   : "➜",
-\ "Unmerged"  : "═",
-\ "Deleted"   : "✖",
-\ "Dirty"     : "≋",
-\ "Clean"     : "✔",
-\ "Unknown"   : "?"
-\ }
-
-" }}}
 
 " {{{ GITGUTTER
 
@@ -207,23 +183,11 @@ let g:gitgutter_max_signs = 1000
 
 " }}}
 
-" {{{ DEOPLETE
-
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_ignore_case = 0
-let g:deoplete#enable_smart_case = 0
-let g:deoplete#enable_camel_case = 1
-let g:deoplete#auto_complete_start_length = 1
-let g:deoplete#max_menu_width = 100
-let g:deoplete#auto_complete_delay = 80
-
-" }}}
-
 " {{{ AIRLINE
 
 let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
-	let g:airline_symbols = {}
+        let g:airline_symbols = {}
 endif
 let g:airline_symbols['maxlinenr'] = ' '
 let g:airline_theme = 'luna'
@@ -239,117 +203,117 @@ let g:airline#extensions#tabline#enabled = 1
 " {{{ MAPPINGS
 
 function! OpenSession()
-	let bufnr = bufnr('%')
-	if filereadable('.session.vim')
-		source .session.vim
-		if bufloaded(bufnr)
-			execute 'buffer ' . bufnr
-		endif
-	else
-		echoerr "No session found"
-	endif
-	unlet bufnr
+        let bufnr = bufnr('%')
+        if filereadable('.session.vim')
+                source .session.vim
+                if bufloaded(bufnr)
+                        execute 'buffer ' . bufnr
+                endif
+        else
+                echoerr "No session found"
+        endif
+        unlet bufnr
 endfunction
 
 let s:qfopen = 0
 
 function! QuickfixToggle()
-	if s:qfopen
-		cclose
-		let s:qfopen = 0
-	else
-		leftabove copen
-		wincmd k
-		let s:qfopen = 1
-	endif
-	call ResizeTerm()
+        if s:qfopen
+                cclose
+                let s:qfopen = 0
+        else
+                rightbelow copen
+                wincmd k
+                let s:qfopen = 1
+        endif
+        call ResizeTerm()
 endfunction
 
 function! ResizeTerm()
-	let pwnr = bufwinnr(bufnr('%'))
-	let wnr = bufwinnr(bufnr('term://'))
-	if wnr !=# -1
-		execute wnr . 'wincmd w'
-		resize 30
-		execute pwnr . 'wincmd w'
-	endif
+        let pwnr = bufwinnr(bufnr('%'))
+        let wnr = bufwinnr(bufnr('term://'))
+        if wnr !=# -1
+                execute wnr . 'wincmd w'
+                resize 30
+                execute pwnr . 'wincmd w'
+        endif
 endfunction!
 
 function! QuickfixOpen()
-	if !s:qfopen
-		leftabove copen
-		wincmd k
-		let s:qfopen = 1
-	endif
+        if !s:qfopen
+                leftabove copen
+                wincmd k
+                let s:qfopen = 1
+        endif
 endfunction
 
 function! QuickfixClose()
-	cclose
-	if s:qfopen
-		let s:qfopen = 0
-	endif
+        cclose
+        if s:qfopen
+                let s:qfopen = 0
+        endif
 endfunction
 
 function! CheckFold()
-	if foldclosed(line('.')) != -1
-		foldopen!
-	endif
+        if foldclosed(line('.')) != -1
+                foldopen!
+        endif
 endfunction
 
 function! OpenLocalFold()
-	if foldclosed(line('.')) != -1
-		foldopen!
-	else
-		execute (line('.') + 1) . 'foldopen!'
-	endif
+        if foldclosed(line('.')) != -1
+                foldopen!
+        else
+                execute (line('.') + 1) . 'foldopen!'
+        endif
 endfunction
 
 let s:termopen = 0
 
 function! CloseTerm()
-	let tname = bufname('term://')
-	if tname !=? ""
-		execute 'buffer ' . tname
-		bdelete!
-	endif
-	let s:termopen = 0
+        let tname = bufname('term://')
+        if tname !=? ""
+                execute 'buffer ' . tname
+                bdelete!
+        endif
+        let s:termopen = 0
 endfunction
 
 function! ToggleTerm()
-	call QuickfixClose()
-	let wnr = bufwinnr(bufnr('term://'))
-	if wnr !=# -1
-		execute wnr . 'wincmd w'
-	else
-		if &filetype !=# 'terminal'
-			let s:termopen = 1
-			let tname = bufname('term://')
-			if tname ==? ""
-				belowright 30split term://zsh
-				set nospell
-				set filetype=terminal
-			else
-				execute 'belowright 30split ' . tname
-			endif
-			set nobuflisted
-		endif
-	endif
+        call QuickfixClose()
+        let wnr = bufwinnr(bufnr('term://'))
+        if wnr !=# -1
+                execute wnr . 'wincmd w'
+        else
+                if &filetype !=# 'terminal'
+                        let s:termopen = 1
+                        let tname = bufname('term://')
+                        if tname ==? ""
+                                belowright 30split term://zsh
+                                set nospell
+                                set filetype=terminal
+                        else
+                                execute 'belowright 30split ' . tname
+                        endif
+                        set nobuflisted
+                endif
+        endif
 endfunction
 
 function! NewTermStuff()
-	if &filetype !=# 'terminal'
-		if s:termopen
-			return "A"
-		else
-			return "Acd " . getcwd() . "\<CR>"
-			let s:termopen = 1
-		endif
-	else
-		return ":q\<CR>"
-	endif
+        if &filetype !=# 'terminal'
+                if s:termopen
+                        return "A"
+                else
+                        return "Acd " . getcwd() . "\<CR>"
+                        let s:termopen = 1
+                endif
+        else
+                return ":q\<CR>"
+        endif
 endfunction
 
-nnoremap <silent> <expr> <Leader><Leader>g ":call ToggleTerm()\<CR>" . NewTermStuff()
+" nnoremap <silent> <expr> <Leader><Leader>g ":call ToggleTerm()\<CR>" . NewTermStuff()
 tnoremap <Leader><Leader>g <C-\><C-N>:q<CR>
 tnoremap <Leader><Leader>c <C-\><C-N><C-W>k
 tnoremap <Esc>s <C-\><C-N>
@@ -357,6 +321,16 @@ tnoremap <Esc>s <C-\><C-N>
 nnoremap <silent> <Leader><Leader><Leader>s :call OpenSession()<CR>
 
 nnoremap <Leader>q gwip
+
+function! SearchNote()
+    let curLine = getreg("z")
+    let note = substitute(curLine, '.*Note \[\(.*\)\].*', '\1', '')
+    execute ('lgrep -r "^\s*\({-\\|--\\|\#\)\?\s*Note \[' . note . '\]$" . --exclude=tags')
+endfunction
+
+nnoremap <silent> <Leader><Leader>m "zyy:call SearchNote()<CR>
+nnoremap <Leader><Leader>g "zyiw:lgrep -rnw <C-R>z . --exclude=tags<CR>
+nnoremap <M-LeftMouse>g <LeftMouse>"zyiw:lgrep -rnw <C-R>z . --exclude=tags<CR>
 
 noremap : ;
 noremap ; :
@@ -373,13 +347,12 @@ map Y <Plug>(operator-flashy)$
 sunmap Y
 
 nnoremap <silent> Q :call QuickfixToggle()<CR>
-nnoremap <silent> <Leader>n :cnext<CR>:call CheckFold()<CR>
-nnoremap <silent> <Leader>r :cc<CR>:call CheckFold()<CR>
-nnoremap <silent> <Leader>j :cprevious<CR>:call CheckFold()<CR>
-nnoremap <silent> <Leader>ln :lnext<CR>:call CheckFold()<CR>
-nnoremap <silent> <Leader>lr :ll<CR>:call CheckFold()<CR>
-nnoremap <silent> <Leader>lj :lprevious<CR>:call CheckFold()<CR>
-nnoremap <silent> <Leader>nt :NERDTreeToggle<CR>
+nnoremap <silent> <Leader>n :lnext<CR>:call CheckFold()<CR>
+nnoremap <silent> <Leader>r :lc<CR>:call CheckFold()<CR>
+nnoremap <silent> <Leader>j :lprevious<CR>:call CheckFold()<CR>
+" nnoremap <silent> <Leader>ln :lnext<CR>:call CheckFold()<CR>
+" nnoremap <silent> <Leader>lr :ll<CR>:call CheckFold()<CR>
+" nnoremap <silent> <Leader>lj :lprevious<CR>:call CheckFold()<CR>
 nnoremap <silent> <Leader>tb :TagbarToggle<CR>:call ResizeTerm()<CR>
 
 map <Leader>ds <Plug>Dsurround
@@ -432,14 +405,14 @@ nmap ga <Plug>(EasyAlign)
 noremap g: g;
 
 function! s:NextOrNewLine()
-	return (getline(line('.') + 1) =~? '\v\s+$') ? "\<Esc>jA" : "\<CR>"
+        return (getline(line('.') + 1) =~? '\v\s+$') ? "\<Esc>jA" : "\<CR>"
 endfunction
 
 function! s:NextOrNewLineNormal()
-	return (col('.') >= col('$') && getline(line('.') + 1) =~? '\v\s+$') ? "jA" : "i\<CR>"
+        return (col('.') >= col('$') && getline(line('.') + 1) =~? '\v\s+$') ? "jA" : "i\<CR>"
 endfunction
 
-inoremap <expr> <CR> (pumvisible() ? "<C-Y>" : "") . <SID>NextOrNewLine()
+" inoremap <expr> <CR> (pumvisible() ? "<C-Y>" : "") . <SID>NextOrNewLine()
 
 inoremap <expr> <TAB> (pumvisible() ? "<C-N>" : "<TAB>")
 inoremap <S-TAB> <C-P>
@@ -477,21 +450,18 @@ highlight SpellRare cterm=NONE ctermbg=NONE
 highlight MatchParen ctermbg=0
 
 augroup Highlighting
-	autocmd!
-	autocmd BufEnter * highlight airline_tabhid ctermbg=29
-	autocmd BufEnter * highlight NERDTreeGitStatusDirDirty ctermfg=3
-	autocmd BufEnter * highlight NERDTreeGitStatusModified ctermfg=3
-	autocmd BufEnter * highlight NERDTreeGitStatusUntracked ctermfg=9
+        autocmd!
+        autocmd BufEnter * highlight airline_tabhid ctermbg=29
 augroup END
 
 " get highlight group of word under cursor
 nmap <Leader><Leader><Leader>yi :call <SID>SynStack()<CR>
 
 function! <SID>SynStack()
-	if !exists("*synstack")
-		return
-	endif
-	echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+        if !exists("*synstack")
+                return
+        endif
+        echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunction
 
 " }}}
